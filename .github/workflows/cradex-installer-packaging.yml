@@ -1,0 +1,26 @@
+name: Cradex installer and packaging tests
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  installer-and-packaging:
+    name: Installer and packaging tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - name: Test standalone installer
+        run: python3 -m unittest discover -s scripts/install -p 'test_*.py'
+      - name: Test package builder
+        env:
+          CODEX_REPO_ROOT: ${{ github.workspace }}
+        run: python3 -m unittest discover -s scripts/codex_package -p 'test_*.py'
