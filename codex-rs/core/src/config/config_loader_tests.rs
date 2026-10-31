@@ -3836,6 +3836,38 @@ async fn codex_home_is_not_loaded_as_project_layer_from_home_dir() -> std::io::R
 }
 
 #[tokio::test]
+async fn legacy_codex_home_is_not_loaded_as_a_project_layer() -> std::io::Result<()> {
+    let tmp = tempdir()?;
+    let home_dir = tmp.path().join("home");
+    let cradex_home = home_dir.join(".cradex");
+    let legacy_home = home_dir.join(".codex");
+    tokio::fs::create_dir_all(&cradex_home).await?;
+    tokio::fs::create_dir_all(&legacy_home).await?;
+    tokio::fs::write(cradex_home.join(CONFIG_TOML_FILE), "foo = \"cradex\"\n").await?;
+    tokio::fs::write(legacy_home.join(CONFIG_TOML_FILE), "foo = \"legacy\"\n").await?;
+
+    let layers = load_config_layers_state(
+        LOCAL_FS.as_ref(),
+        &cradex_home,
+        Some(AbsolutePathBuf::from_absolute_path(&home_dir)?),
+        &[] as &[(String, TomlValue)],
+        LoaderOverrides::default(),
+        &codex_config::NoopThreadConfigLoader,
+    )
+    .await?;
+
+    assert!(layers.all_layers_high_to_low().all(|layer| !matches!(
+        layer.name,
+        ConfigLayerSource::Project { .. }
+    )));
+    assert_eq!(
+        layers.effective_config().get("foo"),
+        Some(&TomlValue::String("cradex".to_string()))
+    );
+    Ok(())
+}
+
+#[tokio::test]
 async fn codex_home_within_project_tree_is_not_double_loaded() -> std::io::Result<()> {
     let tmp = tempdir()?;
     let project_root = tmp.path().join("project");

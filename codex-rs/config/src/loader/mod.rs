@@ -1,4 +1,5 @@
 mod application;
+mod cradex_home;
 mod layer_io;
 mod local;
 #[cfg(target_os = "macos")]
@@ -1843,6 +1844,10 @@ async fn discover_project_layers(
     let codex_home_abs = AbsolutePathBuf::from_absolute_path(codex_home)?;
     let codex_home_normalized =
         normalize_path(codex_home_abs.as_path()).unwrap_or_else(|_| codex_home_abs.to_path_buf());
+    // A global Cradex home and a legacy global Codex home may be siblings.
+    // When starting in the user's home, do not reinterpret the old global
+    // configuration as a project configuration.
+    let legacy_home = cradex_home::legacy_home_sibling(codex_home_abs.as_path());
     let mut dirs = cwd
         .ancestors()
         .scan(false, |done, a| {
@@ -1862,6 +1867,9 @@ async fn discover_project_layers(
     let mut startup_warnings = Vec::new();
     for dir in dirs {
         let dot_codex_abs = dir.join(".codex");
+        if legacy_home.as_deref() == Some(dot_codex_abs.as_path()) {
+            continue;
+        }
         let dot_codex_uri = PathUri::from_abs_path(&dot_codex_abs);
         if !fs
             .get_metadata(&dot_codex_uri, Default::default(), /*sandbox*/ None)
