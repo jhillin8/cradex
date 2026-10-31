@@ -44,7 +44,7 @@ A privileged user (i.e., `root` or a user with `sudo`) who has access to `OPENAI
 printenv OPENAI_API_KEY | env -u OPENAI_API_KEY codex-responses-api-proxy --http-shutdown --server-info /tmp/server-info.json
 ```
 
-A non-privileged user would then run Codex as follows, specifying the `model_provider` dynamically:
+A non-privileged user would then run Cradex as follows, specifying the `model_provider` dynamically:
 
 ```shell
 PROXY_PORT=$(jq .port /tmp/server-info.json)
@@ -133,10 +133,10 @@ bodies and credential-bearing URL errors are suppressed in diagnostics.
 
 **Caller responsibilities:** run the proxy with the existing privileged-process
 protections. Remove `ACTIONS_ID_TOKEN_REQUEST_TOKEN` and
-`ACTIONS_ID_TOKEN_REQUEST_URL` from the environment **before** launching Codex
+`ACTIONS_ID_TOKEN_REQUEST_URL` from the environment **before** launching Cradex
 or any untrusted subprocess. The proxy cannot sanitize the parent GitHub
 runner's environment for other steps. Never put GitHub or OpenAI bearer tokens
-in arguments, Codex config, server-info files, `GITHUB_OUTPUT`, or
+in arguments, Cradex config, server-info files, `GITHUB_OUTPUT`, or
 `GITHUB_ENV`. Retain the same privilege separation as API-key mode. The
 OIDC mode uses sensitive HTTP headers and zeroizes temporary credential
 buffers; it does not make the API-key path's single static, mlocked-allocation

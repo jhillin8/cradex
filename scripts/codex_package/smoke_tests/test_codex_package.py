@@ -90,7 +90,7 @@ def test_packaged_executor_initializes_and_enforces_sandbox(
     environment = {**package.environment, "CODEX_HOME": str(home)}
     if windows:
         # Elevated mode must discover the setup/runner in this package's resources.
-        # Exclude build outputs and host Codex installations from helper fallback.
+        # Exclude build outputs and host Cradex installations from helper fallback.
         environment["PATH"] = str(Path(os.environ["SystemRoot"]) / "System32")
     sandbox = {
         "permissions": {

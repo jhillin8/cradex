@@ -210,17 +210,17 @@ fn default_owned_screen_entry_paints_before_sync_ends_and_exit_clears_inline_dra
     first_frame.process(&terminal.output[..end]);
     let first_contents = first_frame.screen().contents();
     ensure!(
-        first_contents.contains("OpenAI Codex")
-            && first_contents.contains("Ask Codex to do anything"),
+        first_contents.contains("Peril Rose Cradex")
+            && first_contents.contains("Ask Cradex to do anything"),
         "owned-screen synchronization ended before its first complete loading frame:\n{first_contents}"
     );
     let composer_row = first_contents
         .lines()
-        .position(|line| line.contains("Ask Codex to do anything"))
+        .position(|line| line.contains("Ask Cradex to do anything"))
         .context("missing composer in first owned-screen frame")?;
     assert_eq!(
         (
-            first_contents.matches("Ask Codex to do anything").count(),
+            first_contents.matches("Ask Cradex to do anything").count(),
             first_frame.screen().cursor_position(),
             first_frame.screen().hide_cursor(),
         ),
@@ -266,7 +266,7 @@ fn default_owned_screen_entry_paints_before_sync_ends_and_exit_clears_inline_dra
     ensure!(
         !terminal
             .screen_contents()
-            .contains("Ask Codex to do anything"),
+            .contains("Ask Cradex to do anything"),
         "owned-screen exit left the inline composer visible"
     );
     Ok(())
@@ -391,7 +391,7 @@ impl PtyCodex {
             .stdout(stdout)
             .stderr(slave.try_clone()?)
             .spawn()
-            .context("start Codex in focus-test pseudo-terminal")?;
+            .context("start Cradex in focus-test pseudo-terminal")?;
 
         Ok(Self {
             master,
@@ -414,7 +414,7 @@ impl PtyCodex {
             self.read_output(Duration::from_millis(/*millis*/ 50))?;
             self.answer_startup_queries()?;
 
-            if self.palette_answered && self.screen_contains("OpenAI Codex") {
+            if self.palette_answered && self.screen_contains("Peril Rose Cradex") {
                 return Ok(());
             }
 
@@ -538,7 +538,7 @@ impl PtyCodex {
                 return Ok(());
             }
             if let Some(status) = self.child.try_wait()? {
-                bail!("Codex exited while waiting for {text:?} ({status})");
+                bail!("Cradex exited while waiting for {text:?} ({status})");
             }
         }
         bail!("missing {text:?}; screen:\n{}", self.screen_contents())
@@ -575,7 +575,7 @@ pub(super) fn write_test_config(codex_home: &Path, repo_root: &Path) -> Result<(
          [projects.\"{repo_root}\"]\ntrust_level = \"trusted\"\n"
     );
     std::fs::write(codex_home.join("config.toml"), config)
-        .context("write focus-test Codex configuration")?;
+        .context("write focus-test Cradex configuration")?;
     std::fs::write(
         codex_home.join("auth.json"),
         r#"{"OPENAI_API_KEY":"focus-palette-test","tokens":null,"last_refresh":null}"#,

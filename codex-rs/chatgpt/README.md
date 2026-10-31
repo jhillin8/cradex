@@ -1,5 +1,5 @@
 # ChatGPT
 
-This crate pertains to first party ChatGPT APIs and products such as Codex agent.
-
-This crate is built and maintained by OpenAI employees. External code contributions are not accepted; please report bugs and request features in the [Codex issue tracker](https://github.com/openai/codex/issues).
+This crate integrates with first-party OpenAI ChatGPT APIs used by Cradex.
+It originated in the upstream [Codex project](https://github.com/openai/codex).
+For fork-specific issues, see the [Cradex issue tracker](https://github.com/jhillin8/cradex/issues).

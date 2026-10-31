@@ -413,14 +413,12 @@ async fn reconnect_restores_history_permissions_and_resumes_unsent_input() -> Re
             .lines()
             .filter(|line| {
                 line.contains("Couldn't confirm whether")
-                    || line.contains("background Codex service")
+                    || line.contains("background Cradex service")
             })
             .collect::<Vec<_>>()
             .join("\n");
         if deferred_notice {
-            assert_snapshot!(notices, @r###"
-⚠ A background Codex service is running v2.0.0, older than your Codex CLI
-"###);
+            assert_snapshot!(notices, @"⚠ A background Cradex service is running v2.0.0, older than your Cradex CLI");
         } else if edit_offline {
             assert!(notices.contains("unacknowledged prompt"));
         } else {

@@ -14,14 +14,14 @@ pip install openai-codex
 Requirements:
 
 - Python `>=3.10`
-- An existing Codex account session, or one of the login flows below
+- An existing Codex authentication session, or one of the login flows below
 
 The SDK installs its matching `openai-codex-cli-bin` runtime dependency
-automatically. Stable SDK releases track the corresponding stable Codex CLI release.
+automatically. Stable SDK releases track the corresponding stable upstream Codex CLI release.
 
 ## 2. Authenticate When Needed
 
-Existing Codex authentication is reused automatically. For ChatGPT browser
+Existing Cradex authentication is reused automatically. For ChatGPT browser
 login:
 
 ```python
@@ -95,7 +95,7 @@ Available presets:
   configured writable roots; this is the normal default for workspace work.
 - `Sandbox.full_access`: run without filesystem access restrictions.
 
-When `sandbox=` is omitted, Codex uses its configured default. A turn override
+When `sandbox=` is omitted, Cradex uses its configured default. A turn override
 also applies to subsequent turns on that thread.
 
 ## 5. Continue A Thread

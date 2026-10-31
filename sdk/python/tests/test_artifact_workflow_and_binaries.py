@@ -644,13 +644,13 @@ def test_source_sdk_package_declares_stable_documentation() -> None:
         in pyproject["project"]["classifiers"],
         "license": pyproject["project"]["license"],
         "documentation": pyproject["project"]["urls"]["Documentation"],
-        "readme_is_stable": "# OpenAI Codex Python SDK\n" in readme,
+        "readme_is_stable": "# Cradex Python SDK\n" in readme,
         "local_license_file": (ROOT / "LICENSE").exists(),
     } == {
-        "description": "Python SDK for Codex",
+        "description": "Python SDK for Cradex",
         "is_stable": True,
         "license": "Apache-2.0",
-        "documentation": "https://github.com/openai/codex/tree/main/sdk/python/docs",
+        "documentation": "https://github.com/jhillin8/cradex/tree/main/sdk/python/docs",
         "readme_is_stable": True,
         "local_license_file": False,
     }
@@ -939,7 +939,7 @@ def test_stage_runtime_release_rejects_incomplete_package_layout(
     package_archive = tmp_path / "codex-package.tar.gz"
     _write_package_archive(package_dir, package_archive)
 
-    with pytest.raises(RuntimeError, match="Missing Codex package layout entries"):
+    with pytest.raises(RuntimeError, match="Missing Cradex package layout entries"):
         script.stage_python_runtime_package(
             tmp_path / "runtime-stage", "1.2.3", tmp_path / source_name
         )
@@ -988,7 +988,7 @@ def test_stage_runtime_directory_rejects_non_regular_entries(
         except OSError:
             pytest.skip("Symlinks are not available on this platform")
 
-    with pytest.raises(RuntimeError, match="Expected a regular Codex package entry"):
+    with pytest.raises(RuntimeError, match="Expected a regular Cradex package entry"):
         script.stage_python_runtime_package(tmp_path / "runtime-stage", "1.2.3", package_dir)
 
 
@@ -1213,7 +1213,7 @@ def test_sdk_release_rejects_unsupported_runtime_even_for_beta(
     project = sdk_release_source / "pyproject.toml"
     project.write_text(project.read_text().replace("==0.153.0", f"=={runtime_version}"))
 
-    with pytest.raises(RuntimeError, match=r"Cannot package.*Codex CLI 0\.151\.0 or newer"):
+    with pytest.raises(RuntimeError, match=r"Cannot package.*Cradex CLI 0\.151\.0 or newer"):
         script.stage_python_sdk_package(tmp_path / "sdk-stage", "0.1.0b1")
 
 
@@ -1222,7 +1222,7 @@ def test_sdk_runtime_override_is_checked_after_stamping(
 ) -> None:
     script = _load_update_script_module()
     monkeypatch.setattr(script, "sdk_root", lambda: sdk_release_source)
-    with pytest.raises(RuntimeError, match=r"Cannot package.*Codex CLI 0\.151\.0 or newer"):
+    with pytest.raises(RuntimeError, match=r"Cannot package.*Cradex CLI 0\.151\.0 or newer"):
         script.stage_python_sdk_package(tmp_path / "sdk-stage", "0.1.0b1", "0.149.0")
 
 
@@ -1426,7 +1426,7 @@ def test_stage_sdk_rejects_empty_runtime_version(tmp_path: Path) -> None:
     args = script.parse_args(
         ["stage-sdk", str(tmp_path / "sdk-stage"), "--sdk-version", "1.2.3", "--codex-version", ""]
     )
-    with pytest.raises(RuntimeError, match="Could not normalize Codex version"):
+    with pytest.raises(RuntimeError, match="Could not normalize Cradex version"):
         script.run_command(args, script.default_cli_ops())
 
 

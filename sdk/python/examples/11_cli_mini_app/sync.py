@@ -17,7 +17,7 @@ from openai_codex.types import (
     TurnCompletedNotification,
 )
 
-print("Codex mini CLI. Type /exit to quit.")
+print("Cradex mini CLI. Type /exit to quit.")
 
 
 def _format_usage(usage: object) -> str:

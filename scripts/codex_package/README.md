@@ -1,4 +1,4 @@
-# Codex package builder
+# Cradex package builder
 
 This package contains the implementation behind `scripts/build_codex_package.py`.
 The top-level script is the stable executable entry point; these modules keep the
@@ -12,7 +12,7 @@ just assemble-codex-package --variant codex-app-server
 just assemble-codex-package --target x86_64-unknown-linux-gnu
 ```
 
-The builder creates a canonical Codex package directory:
+The builder creates a canonical Cradex package directory:
 
 ```text
 .
@@ -36,7 +36,7 @@ Installers use its presence to repair a missing executor while accepting older
 packages that predate the standalone binary.
 
 If `--target` is omitted, the builder uses the release target for the current
-host platform. On Linux, that default is a musl target to match Codex release
+host platform. On Linux, that default is a musl target to match Cradex release
 artifacts; pass a GNU Linux target explicitly for native glibc local builds. If
 `--package-dir` is omitted, the builder creates a new temporary directory and
 prints its path after the package is built.
@@ -84,7 +84,7 @@ strip, or native GNU strip when the host architecture matches. For cross builds,
 install `llvm-strip` or pass `--strip-tool /path/to/target-strip`. Missing tools
 or strip failures fail the build; use `--strip none` to deliberately opt out.
 Third-party resources are copied unchanged. In particular, never strip `bwrap`
-after its integrity digest has been embedded in Codex.
+after its integrity digest has been embedded in Cradex.
 
 Release jobs that already built package resource binaries should also pass the
 corresponding resource flags: `--bwrap-bin` for Linux packages, and
@@ -93,7 +93,7 @@ Windows packages. This keeps package archive creation as a pure staging step
 after signing instead of rebuilding resources.
 
 When the builder source-builds an entrypoint for a Darwin or Linux target, it
-downloads and verifies the matching Codex-built V8 release pair before invoking
+downloads and verifies the matching upstream Codex-built V8 release pair before invoking
 Cargo and sets `RUSTY_V8_ARCHIVE` plus `RUSTY_V8_SRC_BINDING_PATH` for that
 build. Windows targets keep Cargo's release-build MSVC artifact path. Explicit
 overrides remain authoritative when both variables are already set. Set

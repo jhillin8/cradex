@@ -1148,7 +1148,7 @@ mod tests {
                         Line::from(vec![
                             "›".bold(),
                             " ".into(),
-                            "Ask Codex to do anything".dim(),
+                            "Ask Cradex to do anything".dim(),
                         ]),
                     ])
                     .render(frame.area(), frame.buffer_mut());
@@ -1165,13 +1165,13 @@ mod tests {
             .map(str::trim_end)
             .collect::<Vec<_>>()
             .join("\n");
-        assert_snapshot!(visible.trim_end(), @r"
+        assert_snapshot!(visible.trim_end(), @"
         Previous conversation
 
 
 
 
-        › Ask Codex to do anything
+        › Ask Cradex to do anything
         ");
     }
 

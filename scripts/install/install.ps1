@@ -973,7 +973,7 @@ switch ($architecture) {
 }
 
 $codexHome = if ([string]::IsNullOrWhiteSpace($env:CODEX_HOME)) {
-    Join-Path $env:USERPROFILE ".codex"
+    Join-Path $env:USERPROFILE ".cradex"
 } else {
     $env:CODEX_HOME
 }

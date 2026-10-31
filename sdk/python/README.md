@@ -1,9 +1,11 @@
-# OpenAI Codex Python SDK
+# Cradex Python SDK
 
-Build Python applications that start Codex threads, run turns, stream progress,
+Build Python applications that start Cradex threads, run turns, stream progress,
 and control workspace access.
 
 ## Install
+
+The published package below is the upstream OpenAI SDK and may install its own runtime. It does not install the Cradex fork.
 
 Install the SDK:
 
@@ -13,7 +15,7 @@ pip install openai-codex
 
 ## Quickstart
 
-The SDK reuses your existing Codex authentication when one is already
+The SDK reuses your existing Cradex authentication when one is already
 available:
 
 ```python
@@ -30,7 +32,7 @@ collected items, and token usage.
 
 ## Authentication
 
-Existing Codex authentication is reused automatically. To start ChatGPT
+Existing Cradex authentication is reused automatically. To start ChatGPT
 browser login explicitly:
 
 ```python

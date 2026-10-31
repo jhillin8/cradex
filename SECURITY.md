@@ -1,17 +1,7 @@
 # Security Policy
 
-Thank you for helping us keep Codex secure!
+Take care when reporting a vulnerability: do not publish sensitive details or credentials in a public issue. Contact the Cradex maintainers privately with enough detail to reproduce the issue.
 
-## Reporting Security Issues
+For background on the inherited sandboxing, approval, and network controls, see the upstream [Agent approvals & security](https://developers.openai.com/codex/agent-approvals-security) documentation. Behavior in Cradex may differ.
 
-The security is essential to OpenAI's mission. We appreciate the work of security researchers acting in good faith to identify and responsibly report potential vulnerabilities, helping us maintain strong privacy and security standards for our users and technology.
-
-Our security program is managed through Bugcrowd, and we ask that any validated vulnerabilities be reported via the [Bugcrowd program](https://bugcrowd.com/engagements/openai).
-
-## Vulnerability Disclosure Program
-
-Our Vulnerability Program Guidelines are defined on our [Bugcrowd program page](https://bugcrowd.com/engagements/openai).
-
-## How to operate CODEX safely
-
-For details on Codex security boundaries, including sandboxing, approvals, and network controls, see [Agent approvals & security](https://developers.openai.com/codex/agent-approvals-security).
+OpenAI's [Bugcrowd program](https://bugcrowd.com/engagements/openai) applies to OpenAI products; it is not a reporting channel for fork-specific issues.

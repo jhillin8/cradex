@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Unified entry point for the Codex CLI.
+// Unified entry point for the Cradex CLI.
 
 import { spawn } from "node:child_process";
 import { existsSync, readFileSync, realpathSync } from "fs";
@@ -106,7 +106,7 @@ function findCodexExecutable() {
           ? "vp install -g @openai/codex@latest"
           : "npm install -g @openai/codex@latest";
   throw new Error(
-    `Missing optional dependency ${platformPackage}. Reinstall Codex: ${updateCommand}`,
+    `Missing optional dependency ${platformPackage}. Reinstall Cradex: ${updateCommand}`,
   );
 }
 
@@ -160,13 +160,13 @@ function isVitePlusOwnedCodexInstall(packagesDir) {
       }
     }
   } catch {
-    // Missing or unreadable ownership metadata must not prevent Codex starting.
+    // Missing or unreadable ownership metadata must not prevent Cradex starting.
   }
   return false;
 }
 
 /**
- * Use heuristics to detect the package manager that was used to install Codex
+ * Use heuristics to detect the package manager that was used to install Cradex
  * in order to give the user a hint about how to update it.
  */
 function detectPackageManager() {

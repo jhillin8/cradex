@@ -109,7 +109,7 @@ use codex_protocol::protocol::AskForApproval;
 use codex_protocol::user_input::UserInput;
 use codex_terminal_detection::TerminalName;
 
-/// Codex CLI
+/// Cradex CLI
 ///
 /// If no subcommand is specified, options will be forwarded to the interactive CLI.
 #[derive(Debug, Parser)]
@@ -121,8 +121,9 @@ use codex_terminal_detection::TerminalName;
     // The executable is sometimes invoked via a platform‑specific name like
     // `codex-x86_64-unknown-linux-musl`, but the help output should always use
     // the generic `codex` command name that users run.
-    bin_name = "codex",
-    override_usage = "codex [OPTIONS] [PROMPT]\n       codex [OPTIONS] <COMMAND> [ARGS]"
+    name = "cradex",
+    bin_name = "cradex",
+    override_usage = "cradex [OPTIONS] [PROMPT]\n       cradex [OPTIONS] <COMMAND> [ARGS]"
 )]
 struct MultitoolCli {
     #[clap(flatten)]
@@ -149,7 +150,7 @@ enum Subcommand {
     /// Internal: forward a local TCP socket through an HTTP/3 CONNECT proxy.
     #[clap(hide = true)]
     TcpTunnel(codex_tcp_tunnel::Args),
-    /// Run Codex non-interactively.
+    /// Run Cradex non-interactively.
     #[clap(visible_alias = "e")]
     Exec(ExecCli),
 
@@ -162,10 +163,10 @@ enum Subcommand {
     /// Remove stored authentication credentials.
     Logout(LogoutCommand),
 
-    /// Manage external MCP servers for Codex.
+    /// Manage external MCP servers for Cradex.
     Mcp(McpCli),
 
-    /// Manage Codex plugins.
+    /// Manage Cradex plugins.
     Plugin(PluginCli),
 
     /// [experimental] Run the app server or related tooling.
@@ -181,13 +182,13 @@ enum Subcommand {
     /// Generate shell completion scripts.
     Completion(CompletionCommand),
 
-    /// Update Codex to the latest version.
+    /// Update Cradex to the latest version.
     Update,
 
-    /// Diagnose local Codex installation, config, auth, and runtime health.
+    /// Diagnose local Cradex installation, config, auth, and runtime health.
     Doctor(DoctorCommand),
 
-    /// Run commands within a Codex-provided sandbox.
+    /// Run commands within a Cradex-provided sandbox.
     Sandbox(SandboxCommand),
 
     /// Debugging tools.
@@ -197,7 +198,7 @@ enum Subcommand {
     #[clap(hide = true)]
     Execpolicy(ExecpolicyCommand),
 
-    /// Apply the latest diff produced by Codex agent as a `git apply` to your local working tree.
+    /// Apply the latest diff produced by Cradex agent as a `git apply` to your local working tree.
     #[clap(visible_alias = "a")]
     Apply(ApplyCommand),
 
@@ -315,7 +316,7 @@ struct DebugModelsCommand {
 
 #[derive(Debug, Parser)]
 struct ReviewCommand {
-    /// Error out when config.toml contains fields that are not recognized by this version of Codex.
+    /// Error out when config.toml contains fields that are not recognized by this version of Cradex.
     #[arg(long = "strict-config", default_value_t = false)]
     strict_config: bool,
 
@@ -395,7 +396,7 @@ struct SessionArchiveConfigOverrides {
     #[clap(flatten)]
     shared: SharedCliOptions,
 
-    /// Error out when config.toml contains fields that are not recognized by this version of Codex.
+    /// Error out when config.toml contains fields that are not recognized by this version of Cradex.
     #[arg(long = "strict-config", default_value_t = false)]
     strict_config: bool,
 
@@ -583,7 +584,7 @@ struct AppServerCommand {
     #[command(flatten)]
     code_mode_host: codex_app_server::AppServerCodeModeHostArgs,
 
-    /// Error out when config.toml contains fields that are not recognized by this version of Codex.
+    /// Error out when config.toml contains fields that are not recognized by this version of Cradex.
     #[arg(long = "strict-config", default_value_t = false)]
     strict_config: bool,
 
@@ -645,7 +646,7 @@ enum AppServerSubcommand {
     /// [experimental] Generate JSON Schema for the app server protocol.
     GenerateJsonSchema(GenerateJsonSchemaCommand),
 
-    /// [internal] Generate internal JSON Schema artifacts for Codex tooling.
+    /// [internal] Generate internal JSON Schema artifacts for Cradex tooling.
     #[clap(hide = true)]
     GenerateInternalJsonSchema(GenerateInternalJsonSchemaCommand),
 }
@@ -797,7 +798,7 @@ fn run_update_action(
 ) -> anyhow::Result<()> {
     if let UpdateAction::Daemon(source) = action {
         let executable = cli_executable
-            .ok_or_else(|| anyhow::anyhow!("Cannot locate the launching Codex CLI"))?;
+            .ok_or_else(|| anyhow::anyhow!("Cannot locate the launching Cradex CLI"))?;
         println!("Updating the local background server...");
         let status = std::process::Command::new(executable)
             .args(source.command_args())
@@ -807,12 +808,12 @@ fn run_update_action(
             status.success(),
             "Daemon update failed with status {status}"
         );
-        println!("Relaunch Codex to reconnect.");
+        println!("Relaunch Cradex to reconnect.");
         return Ok(());
     }
     println!();
     let cmd_str = action.command_str();
-    println!("Updating Codex via `{cmd_str}`...");
+    println!("Updating Cradex via `{cmd_str}`...");
     let status = {
         #[cfg(windows)]
         {
@@ -856,7 +857,7 @@ fn run_update_action(
     if !status.success() {
         anyhow::bail!("`{cmd_str}` failed with status {status}");
     }
-    println!("\n🎉 Update ran successfully! Please restart Codex.");
+    println!("\n🎉 Update ran successfully! Please restart Cradex.");
     Ok(())
 }
 
@@ -881,7 +882,7 @@ fn run_update_command() -> anyhow::Result<()> {
     #[cfg(debug_assertions)]
     {
         anyhow::bail!(
-            "`codex update` is not available in debug builds. Install a release build of Codex to use this command."
+            "`codex update` is not available in debug builds. Install a release build of Cradex to use this command."
         );
     }
 
@@ -889,7 +890,7 @@ fn run_update_command() -> anyhow::Result<()> {
     {
         let Some(action) = codex_tui::get_update_action() else {
             anyhow::bail!(
-                "Could not detect the Codex installation method. Please update manually: https://developers.openai.com/codex/cli/"
+                "Could not detect the Cradex installation method. Rebuild and install Cradex from its source checkout."
             );
         };
         run_update_action(action, /*cli_executable*/ None)
@@ -2502,7 +2503,7 @@ async fn run_interactive_tui(
         }
 
         eprintln!(
-            "WARNING: TERM is set to \"dumb\". Codex's interactive TUI may not work in this terminal."
+            "WARNING: TERM is set to \"dumb\". Cradex's interactive TUI may not work in this terminal."
         );
         if !confirm("Continue anyway? [y/N]: ")? {
             return Ok(AppExitInfo::fatal(
@@ -2583,7 +2584,7 @@ where
             Err(backup_err) => {
                 local_state_db::print_diagnostic_guidance(startup_error);
                 return Ok(AppExitInfo::fatal(format!(
-                    "failed to move damaged Codex local database files into a backup folder automatically: {backup_err}"
+                    "failed to move damaged Cradex local database files into a backup folder automatically: {backup_err}"
                 )));
             }
         }

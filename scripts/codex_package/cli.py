@@ -1,4 +1,4 @@
-"""Command-line interface for building Codex package directories."""
+"""Command-line interface for building Cradex package directories."""
 
 import argparse
 import re
@@ -50,7 +50,7 @@ def parse_args() -> argparse.Namespace:
 
 def create_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Build a canonical Codex package directory and optional archive.",
+        description="Build a canonical Cradex package directory and optional archive.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument(
@@ -266,9 +266,9 @@ def archive_package(package_dir: Path, args: argparse.Namespace) -> None:
     for archive_output in args.archive_output:
         archive_path = archive_output.resolve()
         write_archive(package_dir, archive_path, force=args.force)
-        print(f"Built Codex package archive at {archive_path}")
+        print(f"Built Cradex package archive at {archive_path}")
 
-    print(f"Built Codex package directory at {package_dir}")
+    print(f"Built Cradex package directory at {package_dir}")
 
 
 def resolve_optional_input_path(

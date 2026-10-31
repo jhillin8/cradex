@@ -275,7 +275,7 @@ include_view_image_tool = false
     .unwrap();
     assert_eq!(
         ignored_config_warning(&config, &[]).unwrap(),
-        "Codex is ignoring 3 unrecognized configuration settings. Check for typos or deprecated settings.\n  enterprise-managed (Defaults, cfg): `model_providers.custom.unknown_timeout` is ignored.\n  session-flags: `model_providers.custom.unknown_timeout` is ignored.\n  session-flags: `profiles.work.features.include_view_image_tool` is ignored. Use [features].view_image to configure the image tool."
+        "Cradex is ignoring 3 unrecognized configuration settings. Check for typos or deprecated settings.\n  enterprise-managed (Defaults, cfg): `model_providers.custom.unknown_timeout` is ignored.\n  session-flags: `model_providers.custom.unknown_timeout` is ignored.\n  session-flags: `profiles.work.features.include_view_image_tool` is ignored. Use [features].view_image to configure the image tool."
     );
 }
 
@@ -292,7 +292,7 @@ fn removed_private_desktop_setting_has_migration_hint() {
     .unwrap();
     assert_eq!(
         ignored_config_warning(&config, &[]).unwrap(),
-        "Codex is ignoring 1 unrecognized configuration setting. Check for typos or deprecated settings.\n  session-flags: `windows.sandbox_private_desktop` is ignored. Remove windows.sandbox_private_desktop; legacy Windows sandboxes always use a private desktop."
+        "Cradex is ignoring 1 unrecognized configuration setting. Check for typos or deprecated settings.\n  session-flags: `windows.sandbox_private_desktop` is ignored. Remove windows.sandbox_private_desktop; legacy Windows sandboxes always use a private desktop."
     );
 }
 
@@ -320,7 +320,7 @@ fn managed_network_unknown_fields_are_reported_for_each_spelling() {
         assert_eq!(
             ignored_config_warning(&config, &[requirements]),
             Some(format!(
-                "Codex is ignoring 2 unrecognized configuration settings. Check for typos or deprecated settings.\n  requirements (<unspecified>): `{table}.enabld` is ignored.\n  requirements (<unspecified>): `{table}.header_injections.0.unknown` is ignored."
+                "Cradex is ignoring 2 unrecognized configuration settings. Check for typos or deprecated settings.\n  requirements (<unspecified>): `{table}.enabld` is ignored.\n  requirements (<unspecified>): `{table}.header_injections.0.unknown` is ignored."
             )),
             "{table}"
         );

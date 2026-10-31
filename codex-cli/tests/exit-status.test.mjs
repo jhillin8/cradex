@@ -23,7 +23,7 @@ test(
   async () => {
     assert.ok(
       process.env.CODEX_TEST_BINARY,
-      "Set CODEX_TEST_BINARY to a built Codex binary",
+      "Set CODEX_TEST_BINARY to a built Cradex binary",
     );
     const directory = await mkdtemp(path.join(tmpdir(), "codex-npm-exit-"));
     let child;

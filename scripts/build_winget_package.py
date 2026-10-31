@@ -13,7 +13,7 @@ def prepare_winget_package(package: Path) -> None:
     if target not in ("x86_64-pc-windows-msvc", "aarch64-pc-windows-msvc"):
         raise ValueError("WinGet requires a Windows package")
     if metadata["entrypoint"] != "bin/codex.exe":
-        raise ValueError("WinGet requires the canonical Codex entrypoint")
+        raise ValueError("WinGet requires the canonical Cradex entrypoint")
     entrypoint = f"codex-{target}.exe"
     manifest_path = package / "codex-resources/voice/manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))

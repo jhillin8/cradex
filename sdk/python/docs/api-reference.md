@@ -1,6 +1,6 @@
-# OpenAI Codex Python SDK - API Reference
+# Cradex Python SDK - API Reference
 
-Public surface of `openai_codex` for Codex workflows.
+Public surface of `openai_codex` for Cradex workflows.
 
 Turn streams are routed by turn ID so one client can consume multiple active turns concurrently.
 Thread starts default to `ApprovalMode.auto_review`; turn starts accept an optional `approval_mode` override.
@@ -50,7 +50,7 @@ from openai_codex.types import (
 
 - Version: `openai_codex.__version__`
 - Requires Python >= 3.10
-- Public Codex protocol value and event types live in `openai_codex.types`
+- Public Cradex protocol value and event types live in `openai_codex.types`
 
 ## Codex (sync)
 
@@ -98,7 +98,7 @@ select a style; model instructions define the tone.
 
 Python `None` or omitting the option leaves it unset. Explicit `Personality.none`
 (wire value `"none"`) strips the literal `# Personality` section the next time
-Codex prepares instructions from the model catalog, such as when starting a
+Cradex prepares instructions from the model catalog, such as when starting a
 thread or switching models. It does not change explicitly supplied base
 instructions or rewrite an existing thread's instructions when resuming or
 starting a turn. Either legacy value can replace a previous `Personality.none`
@@ -229,7 +229,7 @@ These options have the same behavior on sync and async `run(...)` and `turn(...)
 | `source: str \| None = None`              | Labels the caller that initiated a new turn, such as `"review_ui"`. This is metadata; it does not schedule work or grant authority. Ignored when input joins an active turn.                                 |
 
 `ExternalMessage`, `turn_service_tier`, `source`, and explicit `include_turns`
-on resume/fork require Codex CLI 0.151.0 or newer. The SDK raises `CodexError`
+on resume/fork require upstream Codex CLI 0.151.0 or newer. The SDK raises `CodexError`
 before sending these options to an older runtime, which would otherwise ignore
 them. Published SDK releases install a matching runtime automatically; when
 using `CodexConfig.codex_bin`, choose a compatible executable. Unversioned local
@@ -254,7 +254,7 @@ Presets:
 - `Sandbox.workspace_write`: the normal default for projects with a recorded trust decision; read files and write inside the workspace and configured writable roots.
 - `Sandbox.full_access`: run without filesystem access restrictions.
 
-When `sandbox=` is omitted, Codex uses its configured default. A sandbox
+When `sandbox=` is omitted, Cradex uses its configured default. A sandbox
 passed to `run(...)` or `turn(...)` applies to that turn and subsequent turns.
 
 ## TurnHandle / AsyncTurnHandle
@@ -360,7 +360,7 @@ request followed by an external notification.
 
 ## Public Types
 
-The SDK wrappers return and accept public Codex protocol models wherever possible:
+The SDK wrappers return and accept public Cradex protocol models wherever possible:
 
 ```python
 from openai_codex.types import (

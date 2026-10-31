@@ -176,7 +176,7 @@ def stage_python_sdk_package(
         rf'"{re.escape(RUNTIME_DISTRIBUTION_NAME)}==([^"]+)"', pyproject_text
     )
     if len(runtime_versions) != 1:
-        raise RuntimeError("Expected exactly one pinned Codex runtime dependency")
+        raise RuntimeError("Expected exactly one pinned Cradex runtime dependency")
     requirements = runpy.run_path(sdk_root() / "src/openai_codex/_runtime_requirements.py")
     try:
         requirements["require_runtime_version"](runtime_versions[0])
@@ -196,10 +196,10 @@ def stage_python_runtime_package(
         source = package_source.resolve()
         destination = staging_dir.resolve()
         if source.is_relative_to(destination) or destination.is_relative_to(source):
-            raise RuntimeError("Codex package and runtime staging directories must not overlap")
+            raise RuntimeError("Cradex package and runtime staging directories must not overlap")
         for path in package_source.rglob("*"):
             if path.is_symlink() or not (path.is_file() or path.is_dir()):
-                raise RuntimeError(f"Expected a regular Codex package entry: {path}")
+                raise RuntimeError(f"Expected a regular Cradex package entry: {path}")
 
     package_version = normalize_codex_version(codex_version)
     _copy_package_tree(python_runtime_root(), staging_dir)
@@ -223,7 +223,7 @@ def stage_python_runtime_package(
 
 def _extract_codex_package_archive(package_archive: Path, runtime_package_root: Path) -> None:
     if not package_archive.name.endswith(".tar.gz"):
-        raise RuntimeError(f"Expected a .tar.gz Codex package archive: {package_archive}")
+        raise RuntimeError(f"Expected a .tar.gz Cradex package archive: {package_archive}")
 
     runtime_package_root.mkdir(parents=True, exist_ok=True)
     with tarfile.open(package_archive, "r:gz") as archive:
@@ -250,7 +250,7 @@ def _validate_codex_package_layout(package_dir: Path, package_source: Path) -> N
         missing_entries.append(str(Path("bin") / runtime_code_mode_host_name()))
     if missing_entries:
         missing = ", ".join(missing_entries)
-        raise RuntimeError(f"Missing Codex package layout entries in {package_source}: {missing}")
+        raise RuntimeError(f"Missing Cradex package layout entries in {package_source}: {missing}")
 
 
 def _flatten_string_enum_one_of(definition: dict[str, Any]) -> bool:
@@ -1137,7 +1137,7 @@ def _render_codex_block(
         *_approval_mode_start_signature_lines(),
         *_kw_signature_lines(thread_start_fields),
         "    ) -> Thread:",
-        '        """Create a new Codex conversation thread."""',
+        '        """Create a new Cradex conversation thread."""',
         _approval_mode_assignment_line("_approval_mode_settings"),
         "        params = ThreadStartParams(",
         *_approval_mode_model_arg_lines(),
@@ -1224,7 +1224,7 @@ def _render_async_codex_block(
         *_approval_mode_start_signature_lines(),
         *_kw_signature_lines(thread_start_fields),
         "    ) -> AsyncThread:",
-        '        """Create a new Codex conversation thread."""',
+        '        """Create a new Cradex conversation thread."""',
         "        await self._ensure_initialized()",
         _approval_mode_assignment_line("_approval_mode_settings"),
         "        params = ThreadStartParams(",
@@ -1475,13 +1475,13 @@ def build_parser() -> argparse.ArgumentParser:
     stage_runtime_parser.add_argument(
         "package_source",
         type=Path,
-        help="Path to a Codex package directory or .tar.gz archive for this platform.",
+        help="Path to a Cradex package directory or .tar.gz archive for this platform.",
     )
     stage_runtime_parser.add_argument(
         "--codex-version",
         required=True,
         help=(
-            "Codex release version to write into the staged runtime package. "
+            "Cradex release version to write into the staged runtime package. "
             "Accepts PEP 440 versions or release tags such as "
             "rust-v0.116.0-alpha.1.2."
         ),

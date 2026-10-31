@@ -1,3 +1,3 @@
-# Codex CLI
+# Cradex CLI
 
-[**Codex CLI Documentation**](https://developers.openai.com/codex/cli)
+[**Upstream CLI Documentation**](https://developers.openai.com/codex/cli)

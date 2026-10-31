@@ -8,7 +8,7 @@ pub(super) const GRID: usize = 160;
 pub(super) const EXTENT: f64 = 1.08;
 pub(super) const STEP: f64 = EXTENT * 2.0 / (GRID - 1) as f64;
 pub(super) static FIELDS: LazyLock<[Vec<f32>; 2]> =
-    LazyLock::new(|| [field(paths::CODEX), field(paths::OPENAI)]);
+    LazyLock::new(|| [field(paths::CRADEX), field(paths::CRADEX)]);
 
 struct Path<'a> {
     remaining: &'a str,
@@ -17,7 +17,7 @@ struct Path<'a> {
 impl Path<'_> {
     #[expect(
         clippy::expect_used,
-        reason = "coordinates come only from the embedded, reference-tested SVG paths"
+        reason = "coordinates come only from the embedded SVG path"
     )]
     fn number(&mut self) -> f64 {
         self.remaining = self.remaining.trim_start();
