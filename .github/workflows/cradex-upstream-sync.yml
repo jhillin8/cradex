@@ -1,0 +1,45 @@
+name: Check Codex upstream for updates
+
+on:
+  schedule:
+    # Daily at 12:17 UTC (04:17 PST / 05:17 PDT).
+    - cron: '17 12 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: cradex-upstream-sync
+  cancel-in-progress: false
+
+jobs:
+  propose-updates:
+    runs-on: ubuntu-latest
+    steps:
+      # This job uses only the GitHub API; it never checks out or runs upstream code.
+      - name: Open or retain an upstream review pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          existing=$(gh api --method GET "repos/$GH_REPO/pulls" \
+            -f state=open -f base=main -f head=openai:main --jq 'length')
+          if (( existing > 0 )); then
+            echo 'An upstream pull request is already open; it tracks upstream main.'
+            exit 0
+          fi
+
+          ahead=$(gh api "repos/$GH_REPO/compare/main...openai:main" --jq '.ahead_by')
+          if (( ahead == 0 )); then
+            echo 'No new upstream commits.'
+            exit 0
+          fi
+
+          gh api --method POST "repos/$GH_REPO/pulls" \
+            -f title='Sync updates from Codex upstream' \
+            -f head='openai:main' -f base='main' \
+            -f body='This pull request tracks the upstream Codex main branch. Review Cradex customizations and resolve any conflicts, approve and run the required checks, then merge using a merge commit so upstream history remains connected. Rebuild Cradex after merging. The upstream branch may move as new commits arrive; review the latest changes before merging.'
